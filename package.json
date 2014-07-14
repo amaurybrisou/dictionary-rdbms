@@ -20,9 +20,5 @@
   "license": "BeerWare",
   "bugs": {
     "url": "https://github.com/amaurybrisou/dictionary-rdbms/issues"
-  },
-  "dependencies": {
-    "boom": "~2.4.2",
-    "hoek": "~2.3.0"
   }
 }
