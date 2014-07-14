@@ -1,0 +1,28 @@
+{
+  "name": "dictionary-rdbms",
+  "version": "0.0.1",
+  "description": " Create Relation Database Model & inject basic Data (Languages/Countries...)",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/amaurybrisou/dictionary-rdbms.git"
+  },
+  "keywords": [
+    "rdbms",
+    "dictionary",
+    "hapi",
+    "plugin"
+  ],
+  "author": "Amaury Brisou",
+  "license": "BeerWare",
+  "bugs": {
+    "url": "https://github.com/amaurybrisou/dictionary-rdbms/issues"
+  },
+  "dependencies": {
+    "boom": "~2.4.2",
+    "hoek": "~2.3.0"
+  }
+}
