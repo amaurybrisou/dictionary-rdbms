@@ -1,6 +1,6 @@
 var internals = {}
 
-internals.install = function(sequelize, Sequelize, next){
+internals.models = function(sequelize, Sequelize, next){
   var models = {}
 
   var Country = 
@@ -109,9 +109,6 @@ internals.install = function(sequelize, Sequelize, next){
     }
   })
 
-
-
-
   Word.hasMany(Country, { through: WordCountry })
   Country.hasMany(Word, { through: WordCountry })
 
@@ -128,16 +125,23 @@ internals.install = function(sequelize, Sequelize, next){
   Word.hasMany(Definition)
   Definition.hasMany(Example)
 
+  sequelize.models = models
+
+  next(null, sequelize);
+
+}
+
+internals.install = function(sequelize, options, next){
 
   sequelize
-  .sync()
+  .sync(options)
   .complete(function(err) {
     if (!!err) {
       next(err)
     }
 
 
-    Language.bulkCreate([
+    sequelize.models.Language.bulkCreate([
       { language: "Spanish" },
       { language: "English" }
     ])
@@ -145,7 +149,7 @@ internals.install = function(sequelize, Sequelize, next){
       next(err)
     })
     .success(function(){
-      Country.bulkCreate([
+      sequelize.models.Country.bulkCreate([
         { country: "Spain" },
         { country: "Mexico" },
         { country: "Costa Rica" },
@@ -175,22 +179,15 @@ internals.install = function(sequelize, Sequelize, next){
     })
   })
 
-  return next(null, models)
-}
-
-internals.sync = function(sequelize, next){
-  sequelize
-  .sync()
-  .complete(function(err) {
-    if (!!err) {
-      next(err)
-    }
-    next()
-  })
+  return next(null, sequelize)
 }
 
 
 exports.register = function (plugin, options, next) {
+
+  plugin.dependency('hapi-sequelize')
+
+
   var sequelize_plugin = plugin.servers[0].plugins['hapi-sequelize']
 
   if(!sequelize_plugin){
@@ -202,18 +199,35 @@ exports.register = function (plugin, options, next) {
     var sequelize = sequelize_plugin.sequelize
         Sequelize = sequelize_plugin.Sequelize
 
-
     if(options.drop){
-      internals.install(sequelize, Sequelize, function(err, models){
+      internals.models(sequelize, Sequelize, function(err, sequelize){
         if(err){
-          plugin.log(['dictionary-rdbms', 'err'], err)
+          plugin.log(['dictionary-rdbms', 'error'], err)
+        }
+        internals.install(sequelize, options.sync, function(err, sequelize){
+          if(err){
+            plugin.log(['dictionary-rdbms', 'error'], err)
+          }
+
+          plugin.servers.forEach(function(server){
+            plugin.expose('db', sequelize)
+            plugin.expose('models', sequelize.models)
+          })
+        }) 
+      });
+    } else {
+
+      internals.models(sequelize, Sequelize, function(err, sequelize){
+        if(err){
+          console.log(err)
+          plugin.log(['dictionary-rdbms', 'error'], err)
         }
 
-        plugin.expose('db', sequelize)
-        plugin.expose('models', models)
-        
-       
-      })      
+        plugin.servers.forEach(function(server){
+          plugin.expose('db', sequelize)
+          plugin.expose('models', sequelize.models)
+        })
+      })
     }
   }
 

@@ -16,6 +16,9 @@
     "hapi",
     "plugin"
   ],
+  "engines": {
+    "node": ">= 0.10.25"
+  },
   "author": "Amaury Brisou",
   "license": "BeerWare",
   "bugs": {
