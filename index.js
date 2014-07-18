@@ -109,8 +109,8 @@ internals.models = function(sequelize, Sequelize, next){
     }
   })
 
-  Word.hasMany(Country, { through: WordCountry })
-  Country.hasMany(Word, { through: WordCountry })
+  Word.hasMany(Country, { through: WordCountry , onDelete: 'CASCADE'})
+  Country.hasMany(Word, { through: WordCountry, onDelete: 'CASCADE'})
 
   Word.hasMany(Word, { as : 'Synonyms', joinTableName: 'Synonyms'})
   Word.hasMany(Word, { as : 'Antonyms', joinTableName: 'Antonyms'})
@@ -120,10 +120,10 @@ internals.models = function(sequelize, Sequelize, next){
   Language.hasMany(Word)
   Word.belongsTo(Language)
   
-  Word.hasMany(Hyperlink)
+  Word.hasMany(Hyperlink, {onDelete: 'CASCADE'})
 
-  Word.hasMany(Definition)
-  Definition.hasMany(Example)
+  Word.hasMany(Definition, {onDelete: 'CASCADE'})
+  Definition.hasMany(Example, {onDelete: 'CASCADE'})
 
   sequelize.models = models
 
@@ -230,7 +230,7 @@ exports.register = function (plugin, options, next) {
       })
     }
   }
-
+  
 
   return next()
   
