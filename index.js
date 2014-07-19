@@ -112,6 +112,7 @@ internals.models = function(sequelize, Sequelize, next){
   Word.hasMany(Country, { through: WordCountry , onDelete: 'CASCADE'})
   Country.hasMany(Word, { through: WordCountry, onDelete: 'CASCADE'})
 
+
   Word.hasMany(Word, { as : 'Synonyms', joinTableName: 'Synonyms'})
   Word.hasMany(Word, { as : 'Antonyms', joinTableName: 'Antonyms'})
   Word.hasMany(Word, { as : 'Relatives', joinTableName: 'Relatives'})
@@ -230,7 +231,6 @@ exports.register = function (plugin, options, next) {
       })
     }
   }
-  
 
   return next()
   
