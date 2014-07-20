@@ -37,7 +37,7 @@ internals.models = function(sequelize, Sequelize, next){
       type: Sequelize.TEXT,
       notNull: true,
       notEmpty: true,
-      unique: false
+      unique: true
     }
   })
 
