@@ -16,6 +16,9 @@
     "hapi",
     "plugin"
   ],
+  "scripts": {
+    "test": "lab -C -v"
+  },
   "engines": {
     "node": ">= 0.10.25"
   },
@@ -23,5 +26,8 @@
   "license": "BeerWare",
   "bugs": {
     "url": "https://github.com/amaurybrisou/dictionary-rdbms/issues"
+  },
+  "devDependencies": {
+    "lab": "~3.2.1"
   }
 }

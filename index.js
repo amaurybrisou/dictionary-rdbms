@@ -186,7 +186,7 @@ internals.install = function(sequelize, options, next){
 
 exports.register = function (plugin, options, next) {
 
-  plugin.dependency('hapi-sequelize')
+  //plugin.dependency('hapi-sequelize')
 
 
   var sequelize_plugin = plugin.servers[0].plugins['hapi-sequelize']
@@ -197,7 +197,7 @@ exports.register = function (plugin, options, next) {
   }
 
   if(sequelize_plugin.sequelize && sequelize_plugin.Sequelize){
-    var sequelize = sequelize_plugin.sequelize
+    var sequelize = sequelize_plugin.sequelize,
         Sequelize = sequelize_plugin.Sequelize
 
     if(options.drop){
