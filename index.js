@@ -11,7 +11,7 @@ internals.models = function(sequelize, Sequelize, next){
       notNull: true,
       unique: true
     }
-  })
+  }, { "timestamps" : true })
 
   var Definition = 
   models.Definition = sequelize.define('Definition', {
@@ -29,7 +29,7 @@ internals.models = function(sequelize, Sequelize, next){
         isUUID: 4
       }
     }
-  })
+  }, { "timestamps" : true })
 
   var Example = 
   models.Example = sequelize.define('Example', {
@@ -39,7 +39,7 @@ internals.models = function(sequelize, Sequelize, next){
       notEmpty: true,
       unique: true
     }
-  })
+  }, { "timestamps" : true })
 
   var Hyperlink = 
   models.Hyperlink = sequelize.define('Hyperlink', {
@@ -50,7 +50,7 @@ internals.models = function(sequelize, Sequelize, next){
       notEmpty: true,
       unique: true
     }
-  })
+  }, { "timestamps" : true })
 
   var Word = 
   models.Word = sequelize.define('Word', {
@@ -84,7 +84,7 @@ internals.models = function(sequelize, Sequelize, next){
       defaultValue: true,
       notEmpty: true,
     }
-  })
+  }, { "timestamps" : true })
 
   var Language = 
   models.Language = sequelize.define('Language', {
@@ -95,7 +95,7 @@ internals.models = function(sequelize, Sequelize, next){
       notEmpty: true,
       unique: true
     }
-  })
+  } , { "timestamps" : true })
 
   var WordCountry = 
   models.WordCountry = sequelize.define('WordCountry', {
@@ -107,7 +107,7 @@ internals.models = function(sequelize, Sequelize, next){
       min: 0,
       max: 100
     }
-  })
+  }, { "timestamps" : false })
 
   Word.hasMany(Country, { through: WordCountry , onDelete: 'CASCADE'})
   Country.hasMany(Word, { through: WordCountry, onDelete: 'CASCADE'})
